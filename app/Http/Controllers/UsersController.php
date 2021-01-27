@@ -11,7 +11,6 @@ class UsersController extends Controller
 
     public function __construct()
     {
-
         $this->middleware('auth', [
             'except' => ['show', 'create', 'store', 'index'] // 除了这几个别的都要登录才能访问
         ]);
@@ -31,13 +30,8 @@ class UsersController extends Controller
     }
 
     /**
-     * 注册页
+     * 显示用户页
      */
-    public function create()
-    {
-        return view('users.create');
-    }
-
     public function show(User $user)
     {
         // request()->session()->reflash(); // 所有闪存都保留
@@ -45,6 +39,17 @@ class UsersController extends Controller
         return view('users.show', compact('user'));
     }
 
+    /**
+     * 显示注册页
+     */
+    public function create()
+    {
+        return view('users.create');
+    }
+
+    /**
+     * 注册用户
+     */
     public function store(Request $request)
     {
 
@@ -66,12 +71,18 @@ class UsersController extends Controller
         return redirect()->route('users.show', [$user]);
     }
 
+    /**
+     * 显示用户跟新页
+     */
     public function edit(User $user)
     {
         $this->authorize('update', $user);
         return view('users.edit', compact('user'));
     }
 
+    /**
+     * 更新用户信息
+     */
     public function update(User $user, Request $request)
     {
         $this->authorize('update', $user);
@@ -87,5 +98,13 @@ class UsersController extends Controller
         session()->flash('success', '个人资料更新成功！');
 
         return redirect()->route('users.show', $user->id);
+    }
+
+    public function destroy(User $user)
+    {
+        $this->authorize('destroy', $user);
+        $user->delete();
+        session()->flash('success', '成功删除用户！');
+        return back();
     }
 }
