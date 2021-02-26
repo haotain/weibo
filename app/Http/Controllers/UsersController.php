@@ -34,9 +34,12 @@ class UsersController extends Controller
      */
     public function show(User $user)
     {
+
+        $statuses = $user->statuses()->orderBy('created_at', 'desc')->paginate(10);
+
         // request()->session()->reflash(); // 所有闪存都保留
         // request()->session()->keep(['info']); // 保留指定的
-        return view('users.show', compact('user'));
+        return view('users.show', compact('user', 'statuses'));
     }
 
     /**
