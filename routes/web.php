@@ -28,3 +28,7 @@ Route::delete('logout', 'SessionsController@destroy')->name('logout');
 // 微博相关操作
 Route::resource('statuses', 'StatusesController', ['only' => ['store', 'destroy']]);
 
+// 粉丝页面
+Route::get('/users/{user}/followings', 'UsersController@followings')->name('users.followings');
+Route::get('/users{user}/followers', 'UsersController@followers')->name('users.followers');
+

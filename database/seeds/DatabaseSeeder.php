@@ -1,7 +1,7 @@
 <?php
 
-namespace Database\Seeders;
 
+use Database\Seeders\FollowersTableSeeder;
 use Database\Seeders\StatusesTableSeeder;
 use Database\Seeders\UsersTableSeeder;
 use Illuminate\Database\Seeder;
@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
 
         $this->call(UsersTableSeeder::class);
         $this->call(StatusesTableSeeder::class);
+        $this->call(FollowersTableSeeder::class);
 
         Model::reguard();
 

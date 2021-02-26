@@ -62,7 +62,7 @@ class User extends Authenticatable
     // 获取粉丝关系列表
     public function followers()
     {
-        return $this->helongsToMany(User::class, 'followers', 'user_id', 'follower_id');
+        return $this->belongsToMany(User::class, 'followers', 'user_id', 'follower_id');
     }
 
     // 用户关注人列表
