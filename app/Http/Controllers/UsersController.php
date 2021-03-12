@@ -40,9 +40,12 @@ class UsersController extends Controller
      */
     public function show(User $user)
     {
+
+        $statuses = $user->statuses()->orderBy('created_at', 'desc')->paginate(10);
+
         // request()->session()->reflash(); // 所有闪存都保留
         // request()->session()->keep(['info']); // 保留指定的
-        return view('users.show', compact('user'));
+        return view('users.show', compact('user', 'statuses'));
     }
 
     /**
@@ -142,5 +145,17 @@ class UsersController extends Controller
         Mail::send($view, $data, function($message) use($to, $subject) {
             $message->to($to)->subject($subject);
         });
+    public function followings(User $user)
+    {
+        $users = $user->followings()->paginate(30);
+        $title = $user->name . '关注的人';
+        return view('users.show_follow', compact('users', 'title'));
+    }
+
+    public function followers(User $user)
+    {
+        $users = $user->followers()->paginate(30);
+        $title = $user->name . '的粉丝';
+        return view('users.show_follow', compact('users', 'title'));
     }
 }
